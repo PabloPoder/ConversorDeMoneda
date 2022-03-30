@@ -8,14 +8,12 @@
         android:title="Convertir a Euro"
         android:icon="@android:drawable/ic_media_previous"
         android:orderInCategory="1"
-        app:showAsAction="always"
         />
 
     <item   android:id="@+id/dolar"
         android:title="Convertir a Dolar"
         android:icon="@android:drawable/ic_media_next"
         android:orderInCategory="2"
-        app:showAsAction="always"
         />
 
 </menu>

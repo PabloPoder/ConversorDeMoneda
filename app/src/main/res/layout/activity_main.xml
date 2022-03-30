@@ -87,21 +87,23 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="86dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="166dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="130dp"
         android:layout_toStartOf="@+id/btCambiarValor"
-        android:text="1$ =  " />
+        android:text="1USD$ =  " />
 
     <EditText
         android:id="@+id/tvMonedaActual"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="47dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="18dp"
         android:layout_toStartOf="@+id/btCambiarValor"
         android:hint="- - - $"
         android:text="" />

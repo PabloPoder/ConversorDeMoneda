@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     //  private double dolar = 1.11;
     //  private double euro = 0.90;
 
-    private double valorDeMoneda = 0.0;
+    private double valorDeMoneda = 0.90;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
         if(id==R.id.dolar){
-            //TODO: Marcar RadioButton
             rbConvertirAEuro.setChecked(true);
             rbConvertirADolar.setChecked(false);
             return true;
@@ -67,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
         etEuros.setEnabled(false);
         // Desabilito el input(EditText) para habilitarlo solo cuando oprimo CambiarValor (Button)
         etMonedaActual.setEnabled(false);
+        // TODO: setear valor inicial a los inputs para tener un valor inicial para operar o implementar Try Cacht
+        // Seteo valor de moneda actual en 0.0 para que inice con un valor valido para operar
+        etMonedaActual.setText(valorDeMoneda + "");
 
         rbConvertirADolar = findViewById(R.id.rbConvertirADolar);
         rbConvertirAEuro = findViewById(R.id.rbConvertirAEuro);
@@ -74,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
         btConvertir = findViewById(R.id.btConvertir);
         btCambiarValor = findViewById(R.id.btCambiarValor);
 
-
-        //TODO: implementar funcion de Boton CambiarValor. (no entendi su funcion)
         // Habilitar el EditText para ingresar un valor de moneda
         btCambiarValor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,9 +127,8 @@ public class MainActivity extends AppCompatActivity {
     // Funciones para convertir monedas
     private String ConvertirEurosADolares(String numero){
         // Recibo el String que esta dentro del EditText y los parseo a double para poder operar con el.
-        double euros  = Double.parseDouble(numero);
-
-        double resultado = euros * valorDeMoneda;
+        double moneda  = Double.parseDouble(numero);
+        double resultado = moneda / valorDeMoneda;
 
         // Lo mando como String ( + " " ) para poder asignalo al EditText
         return resultado + " ";
@@ -138,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
     private String ConvertirDolaresAEuros(String numero){
         // Recibo el String que esta dentro del EditText y los parseo a double para poder operar con el.
         double dolares  = Double.parseDouble(numero);
-
         double resultado = dolares * valorDeMoneda;
 
         // Lo mando como String ( + " " ) para poder asignalo al EditText
