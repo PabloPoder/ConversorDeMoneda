@@ -16,14 +16,16 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView tvValorDeConversion;
+    private EditText etMonedaActual;
     private EditText etDolares, etEuros;
     private RadioButton rbConvertirADolar, rbConvertirAEuro;
     private Button btConvertir, btCambiarValor;
 
     // Valores de las monedas harcodeados
-    private double dolar = 1.11;
-    private double euro = 0.90;
+    //  private double dolar = 1.11;
+    //  private double euro = 0.90;
+
+    private double valorDeMoneda = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         inicializarVista();
     }
 
-    // TODO: implementar las opciones desplegables de la APPBar (barra superior)
+    // MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
@@ -43,37 +45,51 @@ public class MainActivity extends AppCompatActivity {
         int id=item.getItemId();
         if(id==R.id.dolar){
             //TODO: Marcar RadioButton
-            //TODO: Desmarcar RadioButton
+            rbConvertirAEuro.setChecked(true);
+            rbConvertirADolar.setChecked(false);
             return true;
+        }
+        if (id== R.id.euro){
+            rbConvertirAEuro.setChecked(false);
+            rbConvertirADolar.setChecked(true);
         }
         return true;
     }
+    //  MENU
 
     private void inicializarVista(){
         etDolares = findViewById(R.id.etDolares);
         etEuros = findViewById(R.id.etEuros);
+        etMonedaActual = findViewById(R.id.tvMonedaActual);
 
         // Desabilito los inputs (EditText) para solo activar el indicado con los RadioButton
         etDolares.setEnabled(false);
         etEuros.setEnabled(false);
-
-        tvValorDeConversion = findViewById(R.id.tvValorDeConversion);
+        // Desabilito el input(EditText) para habilitarlo solo cuando oprimo CambiarValor (Button)
+        etMonedaActual.setEnabled(false);
 
         rbConvertirADolar = findViewById(R.id.rbConvertirADolar);
         rbConvertirAEuro = findViewById(R.id.rbConvertirAEuro);
 
         btConvertir = findViewById(R.id.btConvertir);
-        //TODO: implementar funcion de Boton CambiarValor. (no entendi su funcion)
         btCambiarValor = findViewById(R.id.btCambiarValor);
 
-        // Desabilito un input (EditText) si el otro es seleccionado.
+
+        //TODO: implementar funcion de Boton CambiarValor. (no entendi su funcion)
+        // Habilitar el EditText para ingresar un valor de moneda
+        btCambiarValor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etMonedaActual.setEnabled(true);
+            }
+        });
+
+        // Desabilito un input (EditText) si el otro es seleccionado
         rbConvertirADolar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 etDolares.setEnabled(false);
                 etEuros.setEnabled(true);
-                // Actualizo el valor de conversion segun el RadioButton seleccionado
-                tvValorDeConversion.setText("1EUR = "+Double.toString(dolar) + "USD");
             }
         });
 
@@ -83,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 etEuros.setEnabled(false);
                 etDolares.setEnabled(true);
-                // Actualizo el valor de conversion segun el RadioButton seleccionado
-                tvValorDeConversion.setText("1USD = " + Double.toString(euro) + "EUR");
             }
         });
 
@@ -92,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
         btConvertir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                valorDeMoneda = Double.parseDouble(etMonedaActual.getText().toString());
+
                 //TODO: manejo de errores en caso de que no se introduzca un numero
                 if(rbConvertirAEuro.isChecked())
                     // Mando el valor ingresado en el input (EditText) a la funcion para operar
@@ -112,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         // Recibo el String que esta dentro del EditText y los parseo a double para poder operar con el.
         double euros  = Double.parseDouble(numero);
 
-        double resultado = euros * dolar;
+        double resultado = euros * valorDeMoneda;
 
         // Lo mando como String ( + " " ) para poder asignalo al EditText
         return resultado + " ";
@@ -122,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         // Recibo el String que esta dentro del EditText y los parseo a double para poder operar con el.
         double dolares  = Double.parseDouble(numero);
 
-        double resultado = dolares * euro;
+        double resultado = dolares * valorDeMoneda;
 
         // Lo mando como String ( + " " ) para poder asignalo al EditText
         return resultado + " ";

@@ -86,16 +86,25 @@
         android:text="Cambiar Valor" />
 
     <TextView
-        android:id="@+id/tvValorDeConversion"
-        android:layout_width="149dp"
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="68dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="166dp"
         android:layout_toStartOf="@+id/btCambiarValor"
-        android:text="0.00 $" />
+        android:text="1$ =  " />
+
+    <EditText
+        android:id="@+id/tvMonedaActual"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="47dp"
+        android:layout_toStartOf="@+id/btCambiarValor"
+        android:hint="- - - $"
+        android:text="" />
 
     <Button
         android:id="@+id/btConvertir"
@@ -113,7 +122,7 @@
         android:id="@+id/rgRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvValorDeConversion"
+        android:layout_below="@+id/textView4"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="31dp"
