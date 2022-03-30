@@ -1,11 +1,18 @@
 package com.example.conversordemoneda;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Region;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +23,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText etMonedaActual;
+    private static EditText etMonedaActual;
     private EditText etDolares, etEuros;
     private RadioButton rbConvertirADolar, rbConvertirAEuro;
     private Button btConvertir, btCambiarValor;
@@ -25,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     //  private double dolar = 1.11;
     //  private double euro = 0.90;
 
-    private double valorDeMoneda = 0.90;
+    private static double valorDeMoneda = 0.90;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,35 @@ public class MainActivity extends AppCompatActivity {
     }
     //  MENU
 
+
+    public static class DialogoFormulario extends DialogFragment {
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+            AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+            LayoutInflater li=getLayoutInflater();
+            View view=li.inflate(R.layout.dialogo_cambio,null);
+            builder.setView(view);
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //Seteo el valor nuevo de dolar que está
+                    EditText dolar=view.findViewById(R.id.etDolarDialog);
+                    valorDeMoneda = Double.parseDouble(dolar.getText().toString());
+                    etMonedaActual.setText(dolar.getText());
+                }
+            });
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            return builder.create();
+        }
+    }
+
+
     private void inicializarVista(){
         etDolares = findViewById(R.id.etDolares);
         etEuros = findViewById(R.id.etEuros);
@@ -81,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 etMonedaActual.setEnabled(true);
+
+                DialogoFormulario df = new DialogoFormulario();
+                df.show(getSupportFragmentManager(),"dialogo");
             }
         });
 
@@ -107,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                valorDeMoneda = Double.parseDouble(etMonedaActual.getText().toString());
+//                valorDeMoneda = Double.parseDouble(etMonedaActual.getText().toString());
 
                 //TODO: manejo de errores en caso de que no se introduzca un numero
                 if(rbConvertirAEuro.isChecked())
